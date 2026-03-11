@@ -5,6 +5,14 @@
 
 int main(int argc, char *argv[])
 {
+    int ***array_de_matrizes;
+    array_de_matrizes = (int ***)malloc(argc * sizeof(int));
+
+    int *tamanhos;
+    tamanhos = (int *)malloc(argc * sizeof(int));
+
+
+
     for (int i = 1; i < argc; i++){
         int num;
         FILE *file = fopen(argv[i], "r");
@@ -44,6 +52,9 @@ int main(int argc, char *argv[])
             }
             printf("\n");
         }
+
+        array_de_matrizes[i] = matriz;
+        tamanhos[i] = tamanho_matriz;
         
         for (int i = 0; i < tamanho_matriz; i++){
             free(matriz[i]);
@@ -53,5 +64,7 @@ int main(int argc, char *argv[])
 
         fclose(file);
     }
+
+
 
 }
