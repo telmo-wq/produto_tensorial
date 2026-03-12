@@ -6,12 +6,8 @@
 int main(int argc, char *argv[])
 {
     int ***array_de_matrizes;
-    array_de_matrizes = (int ***)malloc(argc * sizeof(int));
-
-    int *tamanhos;
-    tamanhos = (int *)malloc(argc * sizeof(int));
-
-
+    array_de_matrizes = (int ***)malloc(argc * sizeof(int ***));
+    int *tamanhos = (int *)malloc(argc * sizeof(int));
 
     for (int i = 1; i < argc; i++){
         int num;
@@ -50,26 +46,37 @@ int main(int argc, char *argv[])
         }
 
         array_de_matrizes[i] = matriz;
-        
-        for (int i = 0; i < tamanho_matriz; i++){
-            free(matriz[i]);
-        }
-
-        free(matriz);
+        tamanhos[i] = tamanho_matriz;
 
         fclose(file);
     }
 
-    int **matriz_resultado = produto_tensorial(array_de_matrizes[1], array_de_matrizes[2]);
+    int **matriz_resultado = produto_tensorial(array_de_matrizes[1], array_de_matrizes[2], tamanhos);
 
-    size_t tam = sqrt(sizeof(matriz_resultado));
+    int tamanho_resultado = tamanhos[1] * tamanhos[2];
 
-    for (int i = 0; i < tam; i++){
-        for (int j = 0; j < tam; j++){
+    for (int i = 0; i < tamanho_resultado; i++){
+        for (int j = 0; j < tamanho_resultado; j++){
             printf("%d ", matriz_resultado[i][j]);
         }
         printf("\n");
     }
+
+    for (int linha = 0; linha < tamanho_resultado; linha++){
+        free(matriz_resultado[linha]);
+    }
+
+    free(matriz_resultado);
+
+    for (int matriz = 0; matriz < argc; matriz++){
+        for (int linha = 0; linha < tamanhos[matriz]; linha++){
+            free(array_de_matrizes[matriz][linha]);
+        }
+        free(array_de_matrizes[matriz]);
+    }
+    free(array_de_matrizes);
+
+    free(tamanhos);
 
 
 }

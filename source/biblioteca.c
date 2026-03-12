@@ -26,19 +26,19 @@ int contar_matriz_direta(int **matriz){
 }
 
 int **aloca_matriz(int tamanho_matriz){
-    int **nova_matriz = (int **)malloc(tamanho_matriz * sizeof(int));
+    int **nova_matriz = (int **)malloc(tamanho_matriz * sizeof(int **));
 
     for (int linha = 0; linha < tamanho_matriz; linha++){
-            nova_matriz[linha] = (int *)malloc(tamanho_matriz * sizeof(int));
+        nova_matriz[linha] = (int *)malloc(tamanho_matriz * sizeof(int));
     }
 
     for (int i = 0; i < tamanho_matriz; i++){
-            for (int j = 0; j < tamanho_matriz; j++){
-                nova_matriz[i][j] = 1;
+        for (int j = 0; j < tamanho_matriz; j++){
+            nova_matriz[i][j] = 1;
         }
-     }
+    }
 
-     return nova_matriz;
+    return nova_matriz;
 }
 
 int** mudar_tamanho(int **matriz, int antigo_tamanho, int novo_tamanho){
@@ -61,9 +61,9 @@ int** mudar_tamanho(int **matriz, int antigo_tamanho, int novo_tamanho){
 }
 
 
-int **produto_tensorial(int **matriz1, int **matriz2){
-    size_t tamanho1 = sqrt(sizeof(matriz1));
-    size_t tamanho2 = sqrt(sizeof(matriz2));
+int **produto_tensorial(int **matriz1, int **matriz2, int *tamanhos){
+    int tamanho1 = tamanhos[1];
+    int tamanho2 = tamanhos[2];
 
     int **matriz_resultado = aloca_matriz(tamanho1 * tamanho2);
 
@@ -71,20 +71,9 @@ int **produto_tensorial(int **matriz1, int **matriz2){
 
     for (int i = 0; i < tamanho_resultado; i++){ 
         for (int j = 0; j < tamanho_resultado; j++){
-                matriz_resultado[i][j] = matriz_resultado[i][j] * matriz1[i/(tamanho1)][j/(tamanho1)] * matriz2[i%(tamanho2)][j%(tamanho2)];
+            matriz_resultado[i][j] = matriz_resultado[i][j] * matriz1[i/(tamanho2)][j/(tamanho2)] * matriz2[i%(tamanho2)][j%(tamanho2)];
         }
     } 
-
-    for (int i = 0; i < tamanho1; i++){
-        free(matriz1[i]);
-    }
-
-    for (int i = 0; i < tamanho2; i++){
-        free(matriz2[i]);
-    }
-
-    free(matriz1);
-    free(matriz2);
 
     return matriz_resultado;
 
