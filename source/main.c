@@ -51,9 +51,17 @@ int main(int argc, char *argv[])
         fclose(file);
     }
 
-    int **matriz_resultado = produto_tensorial(array_de_matrizes[0], array_de_matrizes[1], tamanhos);
+
+    int **matriz_resultado = produto_tensorial(array_de_matrizes[0], array_de_matrizes[1], tamanhos[0], tamanhos[1]);
 
     int tamanho_resultado = tamanhos[0] * tamanhos[1];
+
+    if (argc > 3){
+        for (int arquivo = 3; arquivo < argc; arquivo++){
+            matriz_resultado = produto_tensorial(matriz_resultado, array_de_matrizes[arquivo-1], tamanho_resultado, tamanhos[arquivo-1]);
+            tamanho_resultado = tamanho_resultado * tamanhos[arquivo-1];
+        }
+    }
 
     for (int i = 0; i < tamanho_resultado; i++){
         for (int j = 0; j < tamanho_resultado; j++){
