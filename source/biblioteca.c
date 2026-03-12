@@ -62,8 +62,8 @@ int** mudar_tamanho(int **matriz, int antigo_tamanho, int novo_tamanho){
 
 
 int **produto_tensorial(int **matriz1, int **matriz2, int *tamanhos){
-    int tamanho1 = tamanhos[1];
-    int tamanho2 = tamanhos[2];
+    int tamanho1 = tamanhos[0];
+    int tamanho2 = tamanhos[1];
 
     int **matriz_resultado = aloca_matriz(tamanho1 * tamanho2);
 

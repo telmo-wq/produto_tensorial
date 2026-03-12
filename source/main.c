@@ -45,15 +45,15 @@ int main(int argc, char *argv[])
             printf("\n");
         }
 
-        array_de_matrizes[i] = matriz;
-        tamanhos[i] = tamanho_matriz;
+        array_de_matrizes[i-1] = matriz;
+        tamanhos[i-1] = tamanho_matriz;
 
         fclose(file);
     }
 
-    int **matriz_resultado = produto_tensorial(array_de_matrizes[1], array_de_matrizes[2], tamanhos);
+    int **matriz_resultado = produto_tensorial(array_de_matrizes[0], array_de_matrizes[1], tamanhos);
 
-    int tamanho_resultado = tamanhos[1] * tamanhos[2];
+    int tamanho_resultado = tamanhos[0] * tamanhos[1];
 
     for (int i = 0; i < tamanho_resultado; i++){
         for (int j = 0; j < tamanho_resultado; j++){
