@@ -32,11 +32,7 @@ int main(int argc, char *argv[])
 
         printf("%d\n", tamanho_matriz);
 
-        int **matriz = (int **)malloc(tamanho_matriz * sizeof(int *));
-
-        for (int linha = 0; linha < tamanho_matriz; linha++){
-            matriz[linha] = (int *)malloc(tamanho_matriz * sizeof(int));
-        }
+        int **matriz = aloca_matriz(tamanho_matriz);
 
         for (int i = 0; i < tamanho_matriz; i++){
             for (int j = 0; j < tamanho_matriz; j++){
@@ -54,7 +50,6 @@ int main(int argc, char *argv[])
         }
 
         array_de_matrizes[i] = matriz;
-        tamanhos[i] = tamanho_matriz;
         
         for (int i = 0; i < tamanho_matriz; i++){
             free(matriz[i]);
@@ -65,6 +60,16 @@ int main(int argc, char *argv[])
         fclose(file);
     }
 
+    int **matriz_resultado = produto_tensorial(array_de_matrizes[1], array_de_matrizes[2]);
+
+    size_t tam = sqrt(sizeof(matriz_resultado));
+
+    for (int i = 0; i < tam; i++){
+        for (int j = 0; j < tam; j++){
+            printf("%d ", matriz_resultado[i][j]);
+        }
+        printf("\n");
+    }
 
 
 }
