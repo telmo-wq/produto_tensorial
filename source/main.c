@@ -60,6 +60,17 @@ int main(int argc, char *argv[])
         printf("\n");
     }
 
+    FILE *arquivo_resultado = fopen("tensor_tmfc.out", "w");
+
+    for (int linha = 0; linha < tamanho_resultado; linha++){
+        for (int coluna = 0; coluna < tamanho_resultado; coluna++){
+            fprintf(arquivo_resultado, "%d ", matriz_resultado[linha][coluna]);
+        }
+        fprintf(arquivo_resultado, "\n");
+    }
+
+    fclose(arquivo_resultado);
+
     for (int linha = 0; linha < tamanho_resultado; linha++){
         free(matriz_resultado[linha]);
     }
