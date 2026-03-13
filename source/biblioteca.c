@@ -21,9 +21,7 @@ int contar_matriz(FILE *file){
     
 }
 
-int contar_matriz_direta(int **matriz){
-    
-}
+
 
 int **aloca_matriz(int tamanho_matriz){
     int **nova_matriz = (int **)malloc(tamanho_matriz * sizeof(int **));
@@ -41,24 +39,6 @@ int **aloca_matriz(int tamanho_matriz){
     return nova_matriz;
 }
 
-int** mudar_tamanho(int **matriz, int antigo_tamanho, int novo_tamanho){
-    int **nova_matriz = aloca_matriz(novo_tamanho);
-
-    for (int linha = 0; linha < antigo_tamanho; linha++){
-        for (int coluna = 0; coluna < antigo_tamanho; coluna++){
-            nova_matriz[linha][coluna] = matriz[linha][coluna];
-        }
-    }
-
-    for (int i = 0; i < antigo_tamanho; i++){
-        free(matriz[i]);
-    }
-
-    free(matriz);
-
-    return nova_matriz;
-
-}
 
 
 int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2){
