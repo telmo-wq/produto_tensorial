@@ -26,8 +26,6 @@ int main(int argc, char *argv[])
             return 0;
         }
 
-        printf("%d\n", tamanho_matriz);
-
         int **matriz = aloca_matriz(tamanho_matriz);
 
         for (int i = 0; i < tamanho_matriz; i++){
@@ -35,14 +33,6 @@ int main(int argc, char *argv[])
                 fscanf(file, "%d", &num);
                 matriz[i][j] = num;
             }
-        }
-
-
-        for (int i = 0; i < tamanho_matriz; i++){
-            for (int j = 0; j < tamanho_matriz; j++){
-                printf("%d ", matriz[i][j]);
-            }
-            printf("\n");
         }
 
         array_de_matrizes[i-1] = matriz;
