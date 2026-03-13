@@ -9,6 +9,11 @@ int main(int argc, char *argv[])
     array_de_matrizes = (int ***)malloc(argc * sizeof(int ***));
     int *tamanhos = (int *)malloc(argc * sizeof(int));
 
+    if (argc == 2){
+        printf("AVISO: Devem ser inseridos no minimo dois arquivos\n");
+        return 0;
+    }
+
     for (int i = 1; i < argc; i++){
         int num;
         FILE *file = fopen(argv[i], "r");
