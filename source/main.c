@@ -2,6 +2,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include "biblioteca.h"
+#include <pthread.h>
+#include <time.h>
+
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +16,10 @@ int main(int argc, char *argv[])
         printf("AVISO: Devem ser inseridos no minimo dois arquivos\n");
         return 0;
     }
+
+    struct timespec inicio, fim;
+
+    clock_gettime(CLOCK_MONOTONIC, &inicio);
 
     for (int i = 1; i < argc; i++){
         int num;
@@ -91,6 +98,12 @@ int main(int argc, char *argv[])
     free(array_de_matrizes);
 
     free(tamanhos);
+
+    clock_gettime(CLOCK_MONOTONIC, &fim);
+
+    double tempo = ((fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec))/1e9;
+
+    printf("Tempo de execução: %f segundos\n", tempo);
 
 
 }

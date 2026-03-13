@@ -1,5 +1,5 @@
 tensor: main.o biblioteca.o
-	gcc main.o biblioteca.o -o tensor -lm
+	gcc main.o biblioteca.o -o tensor -lm -lrt
 
 main.o: source/main.c
 	gcc -c source/main.c
