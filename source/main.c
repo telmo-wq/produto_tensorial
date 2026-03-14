@@ -5,6 +5,11 @@
 #include <pthread.h>
 #include <time.h>
 
+typedef struct {
+    int ***array_de_matrizes;
+    int *tamanhos;
+    int argc;
+} argumentos_threads;
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +23,11 @@ int main(int argc, char *argv[])
     }
 
     struct timespec inicio, fim;
+
+    pthread_t tid;
+    pthread_attr_t attr;
+
+    pthread_create(&tid, &attr, calcular_tensorial, &argumentos_threads);
 
     clock_gettime(CLOCK_MONOTONIC, &inicio);
 
@@ -54,40 +64,6 @@ int main(int argc, char *argv[])
     }
 
 
-    int **matriz_resultado = produto_tensorial(array_de_matrizes[0], array_de_matrizes[1], tamanhos[0], tamanhos[1]);
-
-    int tamanho_resultado = tamanhos[0] * tamanhos[1];
-
-    if (argc > 3){
-        for (int arquivo = 3; arquivo < argc; arquivo++){
-            matriz_resultado = produto_tensorial(matriz_resultado, array_de_matrizes[arquivo-1], tamanho_resultado, tamanhos[arquivo-1]);
-            tamanho_resultado = tamanho_resultado * tamanhos[arquivo-1];
-        }
-    }
-
-    for (int i = 0; i < tamanho_resultado; i++){
-        for (int j = 0; j < tamanho_resultado; j++){
-            printf("%d ", matriz_resultado[i][j]);
-        }
-        printf("\n");
-    }
-
-    FILE *arquivo_resultado = fopen("tensor_tmfc.out", "w");
-
-    for (int linha = 0; linha < tamanho_resultado; linha++){
-        for (int coluna = 0; coluna < tamanho_resultado; coluna++){
-            fprintf(arquivo_resultado, "%d ", matriz_resultado[linha][coluna]);
-        }
-        fprintf(arquivo_resultado, "\n");
-    }
-
-    fclose(arquivo_resultado);
-
-    for (int linha = 0; linha < tamanho_resultado; linha++){
-        free(matriz_resultado[linha]);
-    }
-
-    free(matriz_resultado);
 
     for (int matriz = 0; matriz < argc; matriz++){
         for (int linha = 0; linha < tamanhos[matriz]; linha++){
@@ -100,8 +76,6 @@ int main(int argc, char *argv[])
     free(tamanhos);
 
     clock_gettime(CLOCK_MONOTONIC, &fim);
-
-    double tempo = ((fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec))/1e9;
 
     printf("Tempo de execução: %f segundos\n", tempo);
 
