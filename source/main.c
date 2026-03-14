@@ -4,6 +4,7 @@
 #include "biblioteca.h"
 #include <pthread.h>
 #include <time.h>
+#include <omp.h>
 
 
 int main(int argc, char *argv[])

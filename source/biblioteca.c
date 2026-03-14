@@ -47,6 +47,7 @@ int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2
 
     int tamanho_resultado = tamanho1 * tamanho2;
 
+    #pragma openmp parallel for collapse(2)
     for (int i = 0; i < tamanho_resultado; i++){ 
         for (int j = 0; j < tamanho_resultado; j++){
             matriz_resultado[i][j] = matriz_resultado[i][j] * matriz1[i/(tamanho2)][j/(tamanho2)] * matriz2[i%(tamanho2)][j%(tamanho2)];
