@@ -5,7 +5,6 @@
 
 typedef struct {
     int indice;
-    int argc;
     char *argv;
     int ***array_de_matrizes;
     int *tamanhos;

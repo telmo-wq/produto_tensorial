@@ -27,7 +27,7 @@ int contar_matriz(FILE *file){
 
 
 int **aloca_matriz(int tamanho_matriz){
-    int **nova_matriz = (int **)malloc(tamanho_matriz * sizeof(int **));
+    int **nova_matriz = (int **)malloc(tamanho_matriz * sizeof(int *));
 
     for (int linha = 0; linha < tamanho_matriz; linha++){
         nova_matriz[linha] = (int *)malloc(tamanho_matriz * sizeof(int));

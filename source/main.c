@@ -9,14 +9,15 @@
 
 int main(int argc, char *argv[])
 {
-    int ***array_de_matrizes;
-    array_de_matrizes = (int ***)malloc(argc * sizeof(int ***));
-    int *tamanhos = (int *)malloc(argc * sizeof(int));
 
-    if (argc == 2){
+    if (argc < 2){
         printf("AVISO: Devem ser inseridos no minimo dois arquivos\n");
         return 0;
     }
+
+    int ***array_de_matrizes;
+    array_de_matrizes = (int ***)calloc(argc-1, sizeof(int ***));
+    int *tamanhos = (int *)calloc(argc-1, sizeof(int));
 
     struct timespec inicio, fim;
 
@@ -27,7 +28,6 @@ int main(int argc, char *argv[])
 
     for (int j = 0; j < argc-1; j++){
         argumentos[j].indice = j;
-        argumentos[j].argc = j;
         argumentos[j].argv = argv[j+1];
         argumentos[j].array_de_matrizes = array_de_matrizes;
         argumentos[j].tamanhos = tamanhos;
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
     free(matriz_resultado);
 
-    for (int matriz = 0; matriz < argc; matriz++){
+    for (int matriz = 0; matriz < argc-1; matriz++){
         for (int linha = 0; linha < tamanhos[matriz]; linha++){
             free(array_de_matrizes[matriz][linha]);
         }
