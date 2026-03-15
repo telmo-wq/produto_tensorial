@@ -30,6 +30,10 @@ sudo apt install build-essential
 
 Com o makefile instalado, clone este repositório
 
+Com o repositório clonado, verifique se o terminal está dentro do diretório do arquivo
+```
+cd produto_tensorial
+```
 Para compilar através do makefile:
 
 ```
