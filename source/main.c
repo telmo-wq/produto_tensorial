@@ -6,12 +6,6 @@
 #include <time.h>
 #include <omp.h>
 
-typedef struct {
-    int argc;
-    char **argv;
-    int ***array_de_matrizes;
-    int *tamanhos;
-} Argumentos;
 
 int main(int argc, char *argv[])
 {
@@ -28,17 +22,25 @@ int main(int argc, char *argv[])
 
     clock_gettime(CLOCK_MONOTONIC, &inicio);
 
-    pthread_t tid;
-    Argumentos argumentos;
+    pthread_t *tids = malloc((argc-1) * sizeof(pthread_t));
+    Argumentos *argumentos = malloc((argc-1) * sizeof(Argumentos));
 
-    argumentos.argc = argc;
-    argumentos.argv = argv;
-    argumentos.array_de_matrizes = array_de_matrizes;
-    argumentos.tamanhos = tamanhos;
+    for (int j = 0; j < argc-1; j++){
+        argumentos[j].indice = j;
+        argumentos[j].argc = j;
+        argumentos[j].argv = argv[j+1];
+        argumentos[j].array_de_matrizes = array_de_matrizes;
+        argumentos[j].tamanhos = tamanhos;
 
-    pthread_create(&tid, NULL, ler_arquivos, &argumentos);
-    pthread_join(tid, NULL);
+        pthread_create(&tids[j], NULL, ler_arquivos, &argumentos[j]);
+    }
 
+    for (int i = 0; i < argc-1; i++){
+        pthread_join(tids[i], NULL);
+    }
+
+    free(tids);
+    free(argumentos);
 
     int **matriz_resultado = produto_tensorial(array_de_matrizes[0], array_de_matrizes[1], tamanhos[0], tamanhos[1]);
 

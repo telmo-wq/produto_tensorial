@@ -3,12 +3,7 @@
 #include <stdlib.h>
 
 
-typedef struct {
-    int argc;
-    char **argv;
-    int ***array_de_matrizes;
-    int *tamanhos;
-} Argumentos;
+
 
 
 int contar_matriz(FILE *file){
@@ -69,37 +64,35 @@ int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2
 
 void *ler_arquivos(void *param){
     Argumentos *args = (Argumentos *)param;
-    for (int i = 1; i < args->argc; i++){
-        int num;
-        FILE *file = fopen(args->argv[i], "r");
+    int num;
+    FILE *file = fopen(args->argv, "r");
 
-        if (file == NULL){
-            printf("ERRO! Arquivo não encontrado ou inexistente\n");
+    if (file == NULL){
+        printf("ERRO! Arquivo não encontrado ou inexistente\n");
 
-            return NULL;
-        }
+        return NULL;
+    }
 
-        int tamanho_matriz = contar_matriz(file);
+    int tamanho_matriz = contar_matriz(file);
         
-        if (tamanho_matriz == 0){
-            printf("ERRO! Matriz nao quadrada\n");
-            return NULL;
-        }
+    if (tamanho_matriz == 0){
+        printf("ERRO! Matriz nao quadrada\n");
+        return NULL;
+    }
 
-        int **matriz = aloca_matriz(tamanho_matriz);
+    int **matriz = aloca_matriz(tamanho_matriz);
 
-        for (int i = 0; i < tamanho_matriz; i++){
-            for (int j = 0; j < tamanho_matriz; j++){
+    for (int i = 0; i < tamanho_matriz; i++){
+        for (int j = 0; j < tamanho_matriz; j++){
                 fscanf(file, "%d", &num);
                 matriz[i][j] = num;
-            }
         }
-
-        args->array_de_matrizes[i-1] = matriz;
-        args->tamanhos[i-1] = tamanho_matriz;
-
-        fclose(file);
     }
+
+    args->array_de_matrizes[args->indice] = matriz;
+    args->tamanhos[args->indice] = tamanho_matriz;
+
+    fclose(file);
 
     return NULL;
 }

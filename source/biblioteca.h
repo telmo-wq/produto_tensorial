@@ -3,6 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct {
+    int indice;
+    int argc;
+    char *argv;
+    int ***array_de_matrizes;
+    int *tamanhos;
+} Argumentos;
+
 int contar_matriz(FILE *file);
 
 int **aloca_matriz(int tamanho_matriz);
