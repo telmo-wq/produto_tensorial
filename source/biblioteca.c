@@ -3,6 +3,14 @@
 #include <stdlib.h>
 
 
+typedef struct {
+    int argc;
+    char **argv;
+    int ***array_de_matrizes;
+    int *tamanhos;
+} Argumentos;
+
+
 int contar_matriz(FILE *file){
     int cont_linha = 0;
     int valor;
@@ -47,7 +55,7 @@ int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2
 
     int tamanho_resultado = tamanho1 * tamanho2;
 
-    #pragma openmp parallel for collapse(2)
+    #pragma omp parallel for collapse(2)
     for (int i = 0; i < tamanho_resultado; i++){ 
         for (int j = 0; j < tamanho_resultado; j++){
             matriz_resultado[i][j] = matriz_resultado[i][j] * matriz1[i/(tamanho2)][j/(tamanho2)] * matriz2[i%(tamanho2)][j%(tamanho2)];
@@ -57,4 +65,41 @@ int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2
     return matriz_resultado;
 
 
+}
+
+void *ler_arquivos(void *param){
+    Argumentos *args = (Argumentos *)param;
+    for (int i = 1; i < args->argc; i++){
+        int num;
+        FILE *file = fopen(args->argv[i], "r");
+
+        if (file == NULL){
+            printf("ERRO! Arquivo não encontrado ou inexistente\n");
+
+            return NULL;
+        }
+
+        int tamanho_matriz = contar_matriz(file);
+        
+        if (tamanho_matriz == 0){
+            printf("ERRO! Matriz nao quadrada\n");
+            return NULL;
+        }
+
+        int **matriz = aloca_matriz(tamanho_matriz);
+
+        for (int i = 0; i < tamanho_matriz; i++){
+            for (int j = 0; j < tamanho_matriz; j++){
+                fscanf(file, "%d", &num);
+                matriz[i][j] = num;
+            }
+        }
+
+        args->array_de_matrizes[i-1] = matriz;
+        args->tamanhos[i-1] = tamanho_matriz;
+
+        fclose(file);
+    }
+
+    return NULL;
 }

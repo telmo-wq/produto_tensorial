@@ -9,4 +9,6 @@ int **aloca_matriz(int tamanho_matriz);
 
 int **produto_tensorial(int **matriz1, int **matriz2, int tamanho1, int tamanho2);
 
+void *ler_arquivos(void *param);
+
 #endif

@@ -1,5 +1,5 @@
 tensor: main.o biblioteca.o
-	gcc -fopenmp main.o biblioteca.o -o tensor -lm -lrt
+	gcc -fopenmp main.o biblioteca.o -o tensor -lm -lrt -lpthread
 
 main.o: source/main.c
 	gcc -c source/main.c
