@@ -1,6 +1,6 @@
 # Produto tensorial v2
 
-Este repositório é a reimplementação de um projeto antigo em C de um produto tensorial entre matrizes quadradas. Porém, esta nova implementação inclui manipulção das threads do código por meio das bibliotecas de pthreads e OpenMP, além de ser capaz de cronometrar o tempo de execução em segundos
+Este repositório é a reimplementação de um projeto antigo em C de um produto tensorial entre matrizes quadradas. Porém, esta nova implementação inclui manipulção das threads do sistema operacional por meio das bibliotecas de pthreads e OpenMP, além de ser capaz de cronometrar o tempo de execução em segundos
 
 ## Conteúdos
 
